@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { AllianceRing } from "@/components/graphics/alliance-ring";
 import { LocalFlow } from "@/components/graphics/local-flow";
-import { button, PageHero, Section } from "@/components/layout/section";
+import { CtaTile } from "@/components/layout/cta-tile";
+import { PageIntro, Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { allianceSupport } from "@/lib/content";
+import { allianceSupport, memberQuotes } from "@/lib/content";
 import { photos } from "@/lib/photos";
 
 export const metadata: Metadata = { title: "The Alliance" };
@@ -18,44 +18,25 @@ const portal = [
   "Request assistance or leave feedback, one to one",
 ];
 
-/* PLACEHOLDER quotes, to be replaced with interviews with local members. */
-const quotes = [
-  {
-    quote:
-      "I do the work I'm good at and the paperwork just isn't there any more.",
-    who: "Painter, Canterbury",
-  },
-  {
-    quote: "Paid every week. That changes how you run a small business.",
-    who: "Builder, Waikato",
-  },
-  {
-    quote:
-      "We get government work as a two-person outfit. That doesn't happen on your own.",
-    who: "Plumber, Wellington",
-  },
-];
-
 export default function AlliancePage() {
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="The Alliance"
         photo={photos.alliance}
-        title={
-          <>
-            Good tradespeople.{" "}
-            <em className="font-serif font-normal">Great businesses.</em>
-          </>
-        }
+        title="Good tradespeople. Great businesses."
         lede="The best trades are not always the best at running a business, and they should not have to be. Alliance members own their business and do the work. We carry the rest."
       />
 
-      <Section title="What we carry">
+      <Section
+        tag="What we carry"
+        title="Everything that gets in the way of the work"
+      >
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <dl className="grid gap-6 sm:grid-cols-2">
             {allianceSupport.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.032}>
-                <dt className="font-bold">{item.title}</dt>
+              <Reveal key={item.title} delay={i * 0.04}>
+                <dt className="display font-semibold text-lg">{item.title}</dt>
                 <dd className="mt-1 text-muted">{item.body}</dd>
               </Reveal>
             ))}
@@ -65,39 +46,51 @@ export default function AlliancePage() {
       </Section>
 
       <Section
-        tone="sand"
-        title="Paid weekly"
-        lede="Members invoice nobody and wait for nobody. D&T pays weekly and carries the risk between the job and the settlement."
+        tile
+        tag="Paid weekly"
+        title="Invoice nobody. Wait for nobody."
+        lede="D&T pays weekly and carries the risk between the job and the settlement."
       >
         <LocalFlow />
       </Section>
 
       <Section
-        tone="dark"
-        title="Why members stay"
-        lede="Churn in the Alliance is very low. Members get steady work, professional backing and corporate clients they could not reach alone."
+        tag="Why members stay"
+        title="Very low churn, for a reason"
+        lede="Steady work, professional backing and corporate clients a small outfit could not reach alone."
       >
         <div className="grid gap-6 md:grid-cols-3">
-          {quotes.map((item, i) => (
-            <Reveal key={item.who} delay={i * 0.04}>
-              <blockquote className="h-full rounded-2xl bg-card p-7">
-                <p className="font-serif text-2xl leading-snug md:text-3xl">
-                  “{item.quote}”
-                </p>
-                <footer className="mt-5 font-medium text-accent-strong">
-                  {item.who}
-                </footer>
-              </blockquote>
+          {memberQuotes.map((item, i) => (
+            <Reveal
+              key={item.who}
+              delay={i * 0.06}
+              className="rounded-[2rem] bg-surface p-8"
+            >
+              <span className="display font-semibold text-6xl text-accent leading-none">
+                “
+              </span>
+              <p className="display mt-2 font-medium text-2xl">{item.quote}</p>
+              <p className="mt-6 font-semibold text-accent-strong">
+                {item.who}
+              </p>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section title="Member portal" lede="Coming soon for Alliance members.">
+      <Section
+        tile
+        tag="Member portal"
+        title="Coming soon for members"
+        lede="One login for gear, help material, tickets and a direct line to us."
+      >
         <Reveal>
           <ul className="grid gap-3 sm:grid-cols-2">
             {portal.map((item) => (
-              <li key={item} className="flex items-center gap-3">
+              <li
+                key={item}
+                className="flex items-center gap-3 rounded-2xl bg-card px-5 py-4 font-medium"
+              >
                 <span className="size-2 rounded-full bg-accent" aria-hidden />
                 {item}
               </li>
@@ -106,17 +99,11 @@ export default function AlliancePage() {
         </Reveal>
       </Section>
 
-      <Section
-        tone="orange"
+      <CtaTile
         title="Own your business. Leave the rest to us."
         lede="Talk to us about joining the Alliance in your region."
-      >
-        <Reveal>
-          <Link href="/contact" className={button.primary}>
-            Join the Alliance
-          </Link>
-        </Reveal>
-      </Section>
+        action="Join the Alliance"
+      />
     </>
   );
 }

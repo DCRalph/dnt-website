@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PageHero, Section } from "@/components/layout/section";
+import { PageIntro, Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { company } from "@/lib/content";
+import { company, offices } from "@/lib/content";
 import { photos } from "@/lib/photos";
 
 export const metadata: Metadata = { title: "Contact" };
@@ -18,33 +18,50 @@ export default function ContactPage() {
   ];
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="Contact"
         photo={photos.contact}
         title="Talk to us"
         lede="New client, existing client or a trade business looking at the Alliance. Same address."
       />
-      <Section title="Get in touch">
-        <div className="grid gap-6 md:grid-cols-3">
+      <Section tag="Get in touch" title="One conversation to start">
+        <div className="grid gap-4 md:grid-cols-3">
           {details.map((item, i) => (
             <Reveal
               key={item.label}
-              delay={i * 0.032}
-              className="rounded-2xl bg-card p-7 shadow-sm"
+              delay={i * 0.04}
+              className="rounded-[2rem] bg-surface p-8"
             >
               <p className="font-semibold text-accent-strong">{item.label}</p>
               {item.href ? (
                 <a
                   href={item.href}
-                  className="mt-2 block font-bold text-xl hover:underline"
+                  className="display mt-2 block font-semibold text-2xl hover:text-accent-strong"
                 >
                   {item.value}
                 </a>
               ) : (
-                <p className="mt-2 font-bold text-xl">{item.value}</p>
+                <p className="display mt-2 font-semibold text-2xl">
+                  {item.value}
+                </p>
               )}
             </Reveal>
           ))}
         </div>
+      </Section>
+      <Section tile tag="Offices" title="Regional offices">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {offices.map((office, i) => (
+            <Reveal
+              key={office.city}
+              delay={i * 0.04}
+              className="rounded-2xl bg-card p-6"
+            >
+              <p className="display font-semibold text-xl">{office.city}</p>
+              <p className="mt-1 text-muted text-sm">{office.role}</p>
+            </Reveal>
+          ))}
+        </ul>
       </Section>
     </>
   );

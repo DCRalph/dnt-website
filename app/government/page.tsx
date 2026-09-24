@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { ClaimJourney } from "@/components/graphics/claim-journey";
+import { JourneyRow } from "@/components/graphics/journey-row";
 import { LocalFlow } from "@/components/graphics/local-flow";
 import { NzMap } from "@/components/graphics/nz-map";
-import { button, PageHero, Section } from "@/components/layout/section";
-import { StatsBand } from "@/components/layout/stats-band";
+import { CtaTile } from "@/components/layout/cta-tile";
+import { PageIntro, Section } from "@/components/layout/section";
+import { StatsRow } from "@/components/layout/stats-row";
 import { Reveal } from "@/components/motion/reveal";
 import { photos } from "@/lib/photos";
 
@@ -41,24 +40,30 @@ const assurances = [
 export default function GovernmentPage() {
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="Government"
         photo={photos.government}
         title="Certainty for government and portfolio clients"
         lede="Public housing and public buildings need a partner who is accountable, transparent and already in the community. That is the model we have run for decades."
       />
+      <div className="mx-auto max-w-7xl px-6">
+        <StatsRow />
+      </div>
 
-      <StatsBand />
-
-      <Section title="What you can rely on">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <Section tag="What you can rely on" title="Six things we put in writing">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {assurances.map((item, i) => (
             <Reveal
               key={item.title}
-              delay={i * 0.024}
-              className="rounded-2xl bg-card p-7 shadow-sm"
+              delay={i * 0.04}
+              className="rounded-[2rem] bg-surface p-8"
             >
-              <span className="block size-2.5 rounded-full bg-accent" />
-              <h3 className="mt-5 font-bold text-lg">{item.title}</h3>
+              <p className="display font-semibold text-accent-strong">
+                0{i + 1}
+              </p>
+              <h3 className="display mt-3 font-semibold text-2xl">
+                {item.title}
+              </h3>
               <p className="mt-2 text-muted">{item.body}</p>
             </Reveal>
           ))}
@@ -66,46 +71,32 @@ export default function GovernmentPage() {
       </Section>
 
       <Section
-        tone="sand"
-        title="Public money, spent locally"
-        lede="Wages go to trades who live in the region. Materials come from local suppliers. The contract builds capability in the community it serves."
+        tile
+        tag="Public money, spent locally"
+        title="The contract builds capability where it is delivered"
+        lede="Wages go to trades who live in the region. Materials come from local suppliers."
       >
         <LocalFlow />
       </Section>
 
-      <Section title="Every job, the same way">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
-          <ClaimJourney />
-          <Reveal className="lg:sticky lg:top-28">
-            <Image
-              src={photos.journey}
-              alt=""
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-4/5 w-full rounded-2xl object-cover"
-            />
-          </Reveal>
-        </div>
+      <Section tag="Every job, the same way" title="Five stages. No surprises.">
+        <JourneyRow />
       </Section>
 
       <Section
-        tone="sand"
-        title="Already in the community"
-        lede="Offices and local trade businesses in every region, so work starts without a mobilisation gap."
+        tile
+        tag="Already in the community"
+        title="Offices and trades in every region"
+        lede="Work starts without a mobilisation gap."
       >
         <NzMap />
       </Section>
 
-      <Section
-        tone="orange"
+      <CtaTile
         title="Request a capability statement"
         lede="We will send the full statement, insurances and health and safety documentation."
-      >
-        <Reveal>
-          <Link href="/contact" className={button.primary}>
-            Contact us
-          </Link>
-        </Reveal>
-      </Section>
+        action="Contact us"
+      />
     </>
   );
 }

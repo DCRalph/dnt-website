@@ -408,3 +408,21 @@ export const stats = [
   { value: memberTotal, label: "Alliance trade businesses", suffix: "" },
   { value: 100, label: "New Zealand owned", suffix: "%" },
 ];
+
+/* PLACEHOLDER quotes, to be replaced with interviews with local members. */
+export const memberQuotes = [
+  {
+    quote:
+      "I do the work I'm good at and the paperwork just isn't there any more.",
+    who: "Painter, Canterbury",
+  },
+  {
+    quote: "Paid every week. That changes how you run a small business.",
+    who: "Builder, Waikato",
+  },
+  {
+    quote:
+      "We get government work as a two-person outfit. That doesn't happen on your own.",
+    who: "Plumber, Wellington",
+  },
+];

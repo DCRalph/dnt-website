@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { PageHero, Section } from "@/components/layout/section";
+import { CtaTile } from "@/components/layout/cta-tile";
+import { PageIntro, Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { company, management, milestones, yearsOperating } from "@/lib/content";
 import { photos, servicePhotos } from "@/lib/photos";
@@ -31,22 +32,23 @@ const why = [
 export default function AboutPage() {
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="Our story"
         photo={photos.about}
         title={`${yearsOperating} years of looking after New Zealand homes`}
         lede={`${company.name} started in ${company.founded} as a building and decorating firm. It is still New Zealand owned, still run by people who came up through the trades, and still spends its money where the work is done.`}
       />
 
-      <Section title="Our story">
+      <Section tag="Milestones" title="From one firm to a national Alliance">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
-          <ol className="grid gap-8 border-accent border-l-2 pl-8">
+          <ol className="grid gap-8">
             {milestones.map((item, i) => (
-              <Reveal key={item.year} delay={i * 0.032}>
-                <li>
-                  <p className="font-semibold text-accent-strong">
+              <Reveal key={item.year} delay={i * 0.04}>
+                <li className="grid grid-cols-[5rem_1fr] gap-4">
+                  <p className="display font-semibold text-accent-strong text-xl">
                     {item.year}
                   </p>
-                  <p className="mt-1 max-w-xl text-lg">{item.body}</p>
+                  <p className="text-lg">{item.body}</p>
                 </li>
               </Reveal>
             ))}
@@ -56,28 +58,31 @@ export default function AboutPage() {
               src={servicePhotos.reinstatement}
               alt=""
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-4/3 w-full rounded-2xl object-cover"
+              className="aspect-4/3 w-full rounded-[2rem] object-cover"
             />
           </Reveal>
         </div>
       </Section>
 
       <Section
-        tone="dark"
-        title="Management"
-        lede="The people your regional manager answers to, and who answer to you."
+        tile
+        tag="Management"
+        title="The people who answer to you"
+        lede="And who your regional manager answers to."
       >
-        <ul className="grid grid-cols-2 gap-8 md:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
           {management.map((person, i) => (
-            <Reveal key={`${person.name}-${person.role}`} delay={i * 0.024}>
+            <Reveal key={`${person.name}-${person.role}`} delay={i * 0.04}>
               <li>
                 {/* Headshots are black and white. Until they arrive, initials. */}
-                <div className="flex aspect-square items-end rounded-2xl bg-surface p-5 grayscale">
-                  <span className="font-bold text-3xl text-muted">
+                <div className="flex aspect-square items-end rounded-[2rem] bg-card p-5 grayscale">
+                  <span className="display font-semibold text-3xl text-muted">
                     {initials(person.name)}
                   </span>
                 </div>
-                <p className="mt-4 font-bold">{person.name}</p>
+                <p className="display mt-4 font-semibold text-lg">
+                  {person.name}
+                </p>
                 <p className="text-muted">{person.role}</p>
               </li>
             </Reveal>
@@ -86,23 +91,28 @@ export default function AboutPage() {
       </Section>
 
       <Section
-        tone="sand"
-        title="Why it matters"
-        lede="New Zealand is built on small business. When the trades who do the work own their businesses and live in the region, the money and the skills stay there."
+        tag="Why it matters"
+        title="New Zealand is built on small business"
+        lede="When the trades who do the work own their businesses and live in the region, the money and the skills stay there."
       >
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           {why.map((item, i) => (
             <Reveal
               key={item.title}
-              delay={i * 0.032}
-              className="rounded-2xl bg-card p-7"
+              delay={i * 0.04}
+              className="rounded-[2rem] bg-surface p-8"
             >
-              <h3 className="font-bold text-lg">{item.title}</h3>
+              <h3 className="display font-semibold text-2xl">{item.title}</h3>
               <p className="mt-2 text-muted">{item.body}</p>
             </Reveal>
           ))}
         </div>
       </Section>
+
+      <CtaTile
+        title="Talk to the team"
+        lede="Regional managers on the ground in every part of the country."
+      />
     </>
   );
 }

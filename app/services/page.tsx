@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { ClaimJourney } from "@/components/graphics/claim-journey";
-import { button, PageHero, Section } from "@/components/layout/section";
+import { JourneyRow } from "@/components/graphics/journey-row";
+import { CtaTile } from "@/components/layout/cta-tile";
+import { PageIntro, Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { services } from "@/lib/content";
 import { photos, servicePhotos } from "@/lib/photos";
@@ -13,7 +13,8 @@ export const metadata: Metadata = { title: "Services" };
 export default function ServicesPage() {
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="Services"
         photo={photos.services}
         title="Reinstatement, repairs and maintenance"
         lede="Residential and light commercial work across New Zealand, delivered by local trades under one accountable contract."
@@ -22,7 +23,8 @@ export default function ServicesPage() {
         <Section
           key={service.slug}
           id={service.slug}
-          tone={i % 2 ? "sand" : "cream"}
+          tile
+          tag={`0${i + 1}`}
           title={service.title}
           lede={service.summary}
         >
@@ -33,7 +35,7 @@ export default function ServicesPage() {
                 src={servicePhotos[service.slug]}
                 alt=""
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-3/2 w-full rounded-2xl object-cover"
+                className="aspect-3/2 w-full rounded-[2rem] object-cover"
               />
             </Reveal>
             <Reveal delay={0.04}>
@@ -43,19 +45,16 @@ export default function ServicesPage() {
         </Section>
       ))}
       <Section
-        tone="dark"
-        title="How a job runs"
-        lede="The same five stages, whether it is a claim, a repair or a scheduled maintenance visit."
+        tag="How a job runs"
+        title="The same five stages, every time"
+        lede="Whether it is a claim, a repair or a scheduled maintenance visit."
       >
-        <ClaimJourney />
+        <JourneyRow />
       </Section>
-      <Section tone="orange" title="Have a job or a portfolio to talk about?">
-        <Reveal>
-          <Link href="/contact" className={button.primary}>
-            Talk to us
-          </Link>
-        </Reveal>
-      </Section>
+      <CtaTile
+        title="Have a job or a portfolio to talk about?"
+        lede="Tell us what you are looking after and we will come back with how we would run it."
+      />
     </>
   );
 }
