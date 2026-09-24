@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Warm cream page, charcoal and brand orange bands. Every colour utility
+   reads a token, and a section can swap the whole set with `data-tone`, so
+   the same component renders correctly on any band. */
+:root {
+  --background: #fbf8f2;
+  --card: #fff;
+  --surface: #f2ece1;
+  --foreground: #1f1c1a;
+  --muted: #6b645e;
+  --line: #e3dccf;
+  /* Fills, strokes and dots. */
+  --accent: #fc5a08;
+  /* Same hue, darkened until small text on cream passes AA. */
+  --accent-strong: #cf4605;
+}
+
+[data-tone] {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+[data-tone="sand"] {
+  --background: #f2ece1;
+  --card: #fbf8f2;
+  --surface: #e9e1d2;
+  --line: #d9cfbd;
+}
+[data-tone="dark"] {
+  --background: #262220;
+  --card: #332e2b;
+  --surface: #332e2b;
+  --foreground: #fbf8f2;
+  --muted: #bdb4ab;
+  --line: #443d39;
+  /* Lifted so small orange text reads on charcoal. */
+  --accent-strong: #ff9a5c;
+}
+[data-tone="orange"] {
+  --background: #fc5a08;
+  --card: #fff;
+  --surface: #e64f04;
+  --foreground: #fff;
+  --muted: rgba(255, 255, 255, 0.85);
+  --line: rgba(255, 255, 255, 0.35);
+  --accent: #fff;
+  --accent-strong: #fff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  ::selection {
+    @apply bg-accent text-white;
+  }
+}
