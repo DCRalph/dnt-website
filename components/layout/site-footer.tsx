@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { container, surface } from "@/components/layout/section";
 import { company, nav, yearsOperating } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   return (
-    <footer className="mx-auto max-w-7xl px-6 pb-8">
+    <footer className={cn(container, "pt-4 pb-6")}>
       <div
         data-tone="tile"
-        className="grid gap-10 rounded-[2rem] px-8 py-12 md:grid-cols-[2fr_1fr_1fr] md:px-12"
+        className={cn(surface.block, "grid gap-10 md:grid-cols-[2fr_1fr_1fr]")}
       >
         <div>
           <Logo className="h-14" />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro, Section } from "@/components/layout/section";
+import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { company, offices } from "@/lib/content";
 import { photos } from "@/lib/photos";
@@ -30,7 +30,7 @@ export default function ContactPage() {
             <Reveal
               key={item.label}
               delay={i * 0.04}
-              className="rounded-[2rem] bg-surface p-8"
+              className={`${surface.card} bg-surface`}
             >
               <p className="font-semibold text-accent-strong">{item.label}</p>
               {item.href ? (
@@ -55,7 +55,7 @@ export default function ContactPage() {
             <Reveal
               key={office.city}
               delay={i * 0.04}
-              className="rounded-2xl bg-card p-6"
+              className={`${surface.inset} bg-card`}
             >
               <p className="display font-semibold text-xl">{office.city}</p>
               <p className="mt-1 text-muted text-sm">{office.role}</p>

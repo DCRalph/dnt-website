@@ -326,7 +326,7 @@ export function NzMap() {
           ))}
         </div>
 
-        <div className="mt-8 min-h-72 rounded-2xl border border-line bg-card p-6">
+        <div className="mt-8 min-h-72 rounded-2xl bg-card p-5 md:p-6">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={selected?.town ?? "summary"}

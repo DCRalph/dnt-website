@@ -3,7 +3,12 @@ import { JourneyRow } from "@/components/graphics/journey-row";
 import { LocalFlow } from "@/components/graphics/local-flow";
 import { NzMap } from "@/components/graphics/nz-map";
 import { CtaTile } from "@/components/layout/cta-tile";
-import { PageIntro, Section } from "@/components/layout/section";
+import {
+  container,
+  PageIntro,
+  Section,
+  surface,
+} from "@/components/layout/section";
 import { StatsRow } from "@/components/layout/stats-row";
 import { Reveal } from "@/components/motion/reveal";
 import { photos } from "@/lib/photos";
@@ -46,7 +51,7 @@ export default function GovernmentPage() {
         title="Certainty for government and portfolio clients"
         lede="Public housing and public buildings need a partner who is accountable, transparent and already in the community. That is the model we have run for decades."
       />
-      <div className="mx-auto max-w-7xl px-6">
+      <div className={container}>
         <StatsRow />
       </div>
 
@@ -56,7 +61,7 @@ export default function GovernmentPage() {
             <Reveal
               key={item.title}
               delay={i * 0.04}
-              className="rounded-[2rem] bg-surface p-8"
+              className={`${surface.card} bg-surface`}
             >
               <p className="display font-semibold text-accent-strong">
                 0{i + 1}

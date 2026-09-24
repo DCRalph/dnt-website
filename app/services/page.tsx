@@ -35,7 +35,7 @@ export default function ServicesPage() {
                 src={servicePhotos[service.slug]}
                 alt=""
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-3/2 w-full rounded-[2rem] object-cover"
+                className="aspect-3/2 w-full rounded-3xl object-cover"
               />
             </Reveal>
             <Reveal delay={0.04}>

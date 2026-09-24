@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AllianceRing } from "@/components/graphics/alliance-ring";
 import { LocalFlow } from "@/components/graphics/local-flow";
 import { CtaTile } from "@/components/layout/cta-tile";
-import { PageIntro, Section } from "@/components/layout/section";
+import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { allianceSupport, memberQuotes } from "@/lib/content";
 import { photos } from "@/lib/photos";
@@ -64,7 +64,7 @@ export default function AlliancePage() {
             <Reveal
               key={item.who}
               delay={i * 0.06}
-              className="rounded-[2rem] bg-surface p-8"
+              className={`${surface.card} bg-surface`}
             >
               <span className="display font-semibold text-6xl text-accent leading-none">
                 “
@@ -89,7 +89,7 @@ export default function AlliancePage() {
             {portal.map((item) => (
               <li
                 key={item}
-                className="flex items-center gap-3 rounded-2xl bg-card px-5 py-4 font-medium"
+                className={`${surface.inset} flex items-center gap-3 bg-card font-medium`}
               >
                 <span className="size-2 rounded-full bg-accent" aria-hidden />
                 {item}

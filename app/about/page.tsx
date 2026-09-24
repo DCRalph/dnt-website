@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaTile } from "@/components/layout/cta-tile";
-import { PageIntro, Section } from "@/components/layout/section";
+import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { company, management, milestones, yearsOperating } from "@/lib/content";
 import { photos, servicePhotos } from "@/lib/photos";
@@ -58,7 +58,7 @@ export default function AboutPage() {
               src={servicePhotos.reinstatement}
               alt=""
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-4/3 w-full rounded-[2rem] object-cover"
+              className="aspect-4/3 w-full rounded-3xl object-cover"
             />
           </Reveal>
         </div>
@@ -75,7 +75,9 @@ export default function AboutPage() {
             <Reveal key={`${person.name}-${person.role}`} delay={i * 0.04}>
               <li>
                 {/* Headshots are black and white. Until they arrive, initials. */}
-                <div className="flex aspect-square items-end rounded-[2rem] bg-card p-5 grayscale">
+                <div
+                  className={`${surface.inset} flex aspect-square items-end bg-card grayscale`}
+                >
                   <span className="display font-semibold text-3xl text-muted">
                     {initials(person.name)}
                   </span>
@@ -100,7 +102,7 @@ export default function AboutPage() {
             <Reveal
               key={item.title}
               delay={i * 0.04}
-              className="rounded-[2rem] bg-surface p-8"
+              className={`${surface.card} bg-surface`}
             >
               <h3 className="display font-semibold text-2xl">{item.title}</h3>
               <p className="mt-2 text-muted">{item.body}</p>

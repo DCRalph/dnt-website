@@ -13,7 +13,7 @@ export function StatsRow({ className }: { className?: string }) {
       )}
     >
       {stats.map((stat) => (
-        <div key={stat.label} className="md:px-8 md:first:pl-0">
+        <div key={stat.label} className="md:px-8 md:first:pl-0 md:last:pr-0">
           <p className="display font-semibold text-4xl text-accent-strong tabular-nums md:text-5xl">
             <Counter value={stat.value} suffix={stat.suffix} />
           </p>

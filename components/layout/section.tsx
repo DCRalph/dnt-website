@@ -3,6 +3,22 @@ import type { ReactNode } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 
+/* Spacing scale. Three levels, used everywhere:
+   - block: full-width tiles (grey section tiles, the orange closing tile,
+     the footer). Largest radius and padding.
+   - card:  standalone cards and photos.
+   - inset: small items nested inside a block.
+   Grey tiles and white-on-grey cards carry no border; the fill separates
+   them. */
+export const surface = {
+  block: "rounded-4xl px-6 py-12 md:px-12 md:py-16",
+  card: "rounded-3xl p-6 md:p-8",
+  inset: "rounded-2xl p-5",
+};
+
+/* Page container: every edge on the site lines up with this. */
+export const container = "mx-auto w-full max-w-7xl px-6";
+
 /* Orange dot and label. The one bit of ceremony above a heading. */
 export function Tag({ children }: { children: ReactNode }) {
   return (
@@ -37,14 +53,11 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(
-        "mx-auto max-w-7xl scroll-mt-28 px-6 py-10 md:py-14",
-        className,
-      )}
+      className={cn(container, "scroll-mt-32 py-10 md:py-14", className)}
     >
       <div
         data-tone={tile ? "tile" : undefined}
-        className={cn(tile && "rounded-[2.5rem] px-6 py-14 md:px-14 md:py-20")}
+        className={cn(tile && surface.block)}
       >
         <Reveal className="grid gap-5 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
@@ -78,10 +91,15 @@ export function PageIntro({
   photo: StaticImageData;
 }) {
   return (
-    <section className="mx-auto grid max-w-7xl gap-10 px-6 pt-8 pb-10 md:pt-12 lg:grid-cols-12 lg:items-center">
+    <section
+      className={cn(
+        container,
+        "grid gap-10 pt-6 pb-10 md:pt-10 md:pb-14 lg:grid-cols-12 lg:items-center",
+      )}
+    >
       <Reveal className="lg:col-span-7">
         <Tag>{tag}</Tag>
-        <h1 className="display mt-5 max-w-3xl font-semibold text-5xl md:text-7xl">
+        <h1 className="display mt-5 max-w-3xl font-semibold text-4xl sm:text-5xl md:text-7xl">
           {title}
         </h1>
         <p className="mt-7 max-w-xl text-lg text-muted md:text-xl">{lede}</p>
@@ -92,7 +110,7 @@ export function PageIntro({
           alt=""
           priority
           sizes="(min-width: 1024px) 40vw, 100vw"
-          className="aspect-4/3 w-full rounded-[2rem] object-cover"
+          className="aspect-4/3 w-full rounded-3xl object-cover"
         />
       </Reveal>
     </section>

@@ -5,7 +5,13 @@ import { JourneyRow } from "@/components/graphics/journey-row";
 import { LocalFlow } from "@/components/graphics/local-flow";
 import { NzMap } from "@/components/graphics/nz-map";
 import { CtaTile } from "@/components/layout/cta-tile";
-import { button, Section, Tag } from "@/components/layout/section";
+import {
+  button,
+  container,
+  Section,
+  surface,
+  Tag,
+} from "@/components/layout/section";
 import { StatsRow } from "@/components/layout/stats-row";
 import { Reveal } from "@/components/motion/reveal";
 import {
@@ -18,13 +24,14 @@ import {
 } from "@/lib/content";
 import { photos, servicePhotos } from "@/lib/photos";
 
-const tile = "rounded-[2rem] bg-surface p-8";
+/* Grey bento card. */
+const tile = `${surface.card} bg-surface`;
 
 export default function Home() {
   return (
     <>
       {/* Hero: statement left, photo collage right. */}
-      <section className="mx-auto max-w-7xl px-6 pt-8 pb-16 md:pt-16 md:pb-24">
+      <section className={`${container} pt-6 pb-10 md:pt-12 md:pb-14`}>
         <div className="grid gap-14 lg:grid-cols-12 lg:items-center">
           <Reveal className="lg:col-span-7">
             <Tag>New Zealand owned and operated since {company.founded}</Tag>
@@ -62,18 +69,18 @@ export default function Home() {
               alt=""
               priority
               sizes="(min-width: 1024px) 40vw, 100vw"
-              className="aspect-4/5 w-full rounded-[2rem] object-cover"
+              className="aspect-4/5 w-full rounded-3xl object-cover"
             />
             <Image
               src={photos.journey}
               alt=""
               sizes="200px"
-              className="absolute -bottom-8 -left-6 hidden w-44 -rotate-3 rounded-3xl object-cover shadow-xl ring-8 ring-background sm:block md:-left-12 md:w-52"
+              className="absolute -bottom-8 -left-6 hidden w-44 -rotate-3 rounded-2xl object-cover shadow-lg ring-6 ring-background sm:block md:-left-10 md:w-52"
             />
             {/* Stamp. */}
             <div
               data-tone="orange"
-              className="absolute -top-6 -right-4 flex size-28 rotate-12 flex-col items-center justify-center rounded-full shadow-lg md:-right-8 md:size-32"
+              className="absolute -top-6 right-4 flex size-28 rotate-12 flex-col items-center justify-center rounded-full shadow-md md:size-32 min-[1400px]:-right-6"
             >
               <span className="display font-semibold text-4xl md:text-5xl">
                 {yearsOperating}
@@ -83,7 +90,7 @@ export default function Home() {
           </Reveal>
         </div>
 
-        <StatsRow className="mt-20 md:mt-28" />
+        <StatsRow className="mt-16 md:mt-24" />
       </section>
 
       <Section
@@ -108,7 +115,7 @@ export default function Home() {
           <Reveal
             delay={0.05}
             data-tone="orange"
-            className="flex flex-col justify-between rounded-[2rem] p-8 md:col-span-2"
+            className={`${surface.card} flex flex-col justify-between gap-6 md:col-span-2`}
           >
             <h3 className="display font-semibold text-4xl">Paid weekly.</h3>
             <p className="text-muted">
@@ -119,7 +126,7 @@ export default function Home() {
 
           <Reveal
             delay={0.1}
-            className="relative min-h-56 overflow-hidden rounded-[2rem] md:col-span-2"
+            className="relative min-h-56 overflow-hidden rounded-3xl md:col-span-2"
           >
             <Image
               src={servicePhotos.maintenance}
@@ -129,7 +136,7 @@ export default function Home() {
               className="object-cover"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
-            <p className="display absolute right-8 bottom-7 left-8 font-semibold text-2xl text-white">
+            <p className="display absolute inset-x-6 bottom-6 font-semibold text-2xl text-white md:inset-x-8 md:bottom-8">
               One health and safety system across every site.
             </p>
           </Reveal>
@@ -174,7 +181,7 @@ export default function Home() {
 
           <Reveal
             delay={0.15}
-            className={`${tile} flex flex-col justify-between md:col-span-2`}
+            className={`${tile} flex flex-col justify-between gap-6 md:col-span-2`}
           >
             <h3 className="display font-semibold text-6xl text-accent-strong">
               {yearsOperating}
@@ -195,7 +202,7 @@ export default function Home() {
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={i * 0.06} className="group">
-              <div className="overflow-hidden rounded-[2rem]">
+              <div className="overflow-hidden rounded-3xl">
                 <Image
                   src={servicePhotos[service.slug]}
                   alt=""
