@@ -34,14 +34,14 @@ export default function Home() {
       <section
         className={cn(
           container,
-          "grid gap-12 pt-6 pb-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:pt-12",
+          "grid gap-12 pt-6 pb-10 lg:grid-cols-[3fr_2fr] lg:items-center lg:pt-12",
         )}
       >
         <Reveal>
           <span className="display inline-block -rotate-6 rounded-lg border-[3px] border-accent-strong px-3 py-1.5 font-bold text-accent-strong text-sm uppercase tracking-[0.08em]">
             Make-safe · same day
           </span>
-          <h1 className="display mt-6 font-semibold text-5xl sm:text-6xl md:text-7xl xl:text-[5.5rem]">
+          <h1 className="display mt-6 font-semibold text-5xl sm:text-6xl md:text-7xl xl:text-[5rem]">
             {yearsOperating} years of fixing{" "}
             <span className="highlight">New Zealand houses.</span>
           </h1>
