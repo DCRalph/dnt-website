@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { House } from "@/components/graphics/house";
 import { JobSheet } from "@/components/graphics/job-sheet";
+import { NzMap } from "@/components/graphics/nz-map";
 import { CtaTile } from "@/components/layout/cta-tile";
 import { Placeholder } from "@/components/layout/placeholder";
 import {
@@ -163,6 +164,14 @@ export default function Home() {
             </Link>
           </Reveal>
         </div>
+      </Section>
+
+      <Section
+        tile
+        title="Wellington, Christchurch and the lower North Island"
+        lede="Through our partnership with Flooring Design, we'll have a base in every region by the end of 2027."
+      >
+        <NzMap />
       </Section>
 
       <Section
