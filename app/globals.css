@@ -2,41 +2,31 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Warm cream page, charcoal and brand orange bands. Every colour utility
-   reads a token, and a section can swap the whole set with `data-tone`, so
-   the same component renders correctly on any band. */
+/* White page, soft grey tiles, one orange. Every colour utility reads a
+   token, and a block can swap the set with `data-tone` (the orange tiles),
+   so the same component renders correctly anywhere. */
 :root {
-  --background: #fbf8f2;
+  --background: #fff;
   --card: #fff;
-  --surface: #f2ece1;
-  --foreground: #1f1c1a;
-  --muted: #6b645e;
-  --line: #e3dccf;
+  --surface: #f4f3f0;
+  --foreground: #16130f;
+  --muted: #6f6964;
+  --line: #e6e3de;
   /* Fills, strokes and dots. */
   --accent: #fc5a08;
-  /* Same hue, darkened until small text on cream passes AA. */
+  /* Same hue, darkened until small text on white passes AA. */
   --accent-strong: #cf4605;
+  /* Pale tint for tags and highlights. */
+  --accent-soft: #fff0e7;
 }
 
 [data-tone] {
   background-color: var(--background);
   color: var(--foreground);
 }
-[data-tone="sand"] {
-  --background: #f2ece1;
-  --card: #fbf8f2;
-  --surface: #e9e1d2;
-  --line: #d9cfbd;
-}
-[data-tone="dark"] {
-  --background: #262220;
-  --card: #332e2b;
-  --surface: #332e2b;
-  --foreground: #fbf8f2;
-  --muted: #bdb4ab;
-  --line: #443d39;
-  /* Lifted so small orange text reads on charcoal. */
-  --accent-strong: #ff9a5c;
+[data-tone="tile"] {
+  --background: #f4f3f0;
+  --line: #dcd8d1;
 }
 [data-tone="orange"] {
   --background: #fc5a08;
@@ -47,6 +37,7 @@
   --line: rgba(255, 255, 255, 0.35);
   --accent: #fff;
   --accent-strong: #fff;
+  --accent-soft: rgba(255, 255, 255, 0.15);
 }
 
 @theme inline {
@@ -58,8 +49,9 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-dm), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-dm), sans-serif;
 }
 
 @layer base {
@@ -72,4 +64,10 @@
   ::selection {
     @apply bg-accent text-white;
   }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }

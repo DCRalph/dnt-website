@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { PageHero, Section } from "@/components/layout/section";
+import { CtaTile } from "@/components/layout/cta-tile";
+import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { company, management, milestones, yearsOperating } from "@/lib/content";
+import {
+  company,
+  management,
+  milestones,
+  partnership,
+  yearsOperating,
+} from "@/lib/content";
 import { photos, servicePhotos } from "@/lib/photos";
 
 export const metadata: Metadata = { title: "Our story" };
@@ -13,72 +20,64 @@ const initials = (name: string) =>
     .map((part) => part[0])
     .join("");
 
-const why = [
-  {
-    title: "Money stays local",
-    body: "Wages, suppliers and rates are paid in the region the work is done.",
-  },
-  {
-    title: "Talent stays local",
-    body: "Steady work means trades do not have to leave town, or the trade, to make a living.",
-  },
-  {
-    title: "Businesses grow",
-    body: "Alliance members build their own business with corporate clients behind them.",
-  },
-];
-
 export default function AboutPage() {
   return (
     <>
-      <PageHero
+      <PageIntro
+        tag="Our story"
         photo={photos.about}
-        title={`${yearsOperating} years of looking after New Zealand homes`}
-        lede={`${company.name} started in ${company.founded} as a building and decorating firm. It is still New Zealand owned, still run by people who came up through the trades, and still spends its money where the work is done.`}
+        title={`${yearsOperating} years of building in New Zealand`}
+        lede={`${company.founders} started ${company.name} in Wellington in ${company.founded}. We did our first insurance repair in the 1970s and have finished more than 10,000 jobs since.`}
       />
 
-      <Section title="Our story">
+      <Section
+        tag="Milestones"
+        title="From a Wellington builder to a national network"
+      >
         <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
-          <ol className="grid gap-8 border-accent border-l-2 pl-8">
+          <ol className="grid gap-6">
             {milestones.map((item, i) => (
-              <Reveal key={item.year} delay={i * 0.032}>
-                <li>
-                  <p className="font-semibold text-accent-strong">
+              <Reveal key={item.year} delay={i * 0.03}>
+                <li className="grid grid-cols-[5rem_1fr] gap-4">
+                  <p className="display font-semibold text-accent-strong text-xl">
                     {item.year}
                   </p>
-                  <p className="mt-1 max-w-xl text-lg">{item.body}</p>
+                  <p className="text-lg">{item.body}</p>
                 </li>
               </Reveal>
             ))}
           </ol>
-          <Reveal>
+          <Reveal className="lg:sticky lg:top-32">
             <Image
               src={servicePhotos.reinstatement}
               alt=""
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="aspect-4/3 w-full rounded-2xl object-cover"
+              className="aspect-4/3 w-full rounded-3xl object-cover"
             />
           </Reveal>
         </div>
       </Section>
 
-      <Section
-        tone="dark"
-        title="Management"
-        lede="The people your regional manager answers to, and who answer to you."
-      >
-        <ul className="grid grid-cols-2 gap-8 md:grid-cols-3">
+      <Section tile tag="Leadership" title="The people who run D&T">
+        <ul className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {management.map((person, i) => (
-            <Reveal key={`${person.name}-${person.role}`} delay={i * 0.024}>
+            <Reveal key={person.name} delay={i * 0.04}>
               <li>
                 {/* Headshots are black and white. Until they arrive, initials. */}
-                <div className="flex aspect-square items-end rounded-2xl bg-surface p-5 grayscale">
-                  <span className="font-bold text-3xl text-muted">
+                <div
+                  className={`${surface.inset} flex aspect-square items-end bg-card grayscale`}
+                >
+                  <span className="display font-semibold text-3xl text-muted">
                     {initials(person.name)}
                   </span>
                 </div>
-                <p className="mt-4 font-bold">{person.name}</p>
-                <p className="text-muted">{person.role}</p>
+                <p className="display mt-4 font-semibold text-lg">
+                  {person.name}
+                </p>
+                <p className="font-medium text-accent-strong text-sm">
+                  {person.role}
+                </p>
+                <p className="mt-2 text-muted text-sm">{person.note}</p>
               </li>
             </Reveal>
           ))}
@@ -86,23 +85,30 @@ export default function AboutPage() {
       </Section>
 
       <Section
-        tone="sand"
-        title="Why it matters"
-        lede="New Zealand is built on small business. When the trades who do the work own their businesses and live in the region, the money and the skills stay there."
+        tag="What's next"
+        title={`Going national with ${partnership.name}`}
+        lede={`${partnership.name} has flooring stores and showrooms across the country. We're setting up a base in each one, and their installers are joining the Alliance.`}
       >
-        <div className="grid gap-6 md:grid-cols-3">
-          {why.map((item, i) => (
+        <ol className="grid gap-4 md:grid-cols-3">
+          {partnership.rollout.map((step, i) => (
             <Reveal
-              key={item.title}
-              delay={i * 0.032}
-              className="rounded-2xl bg-card p-7"
+              key={step.when}
+              delay={i * 0.04}
+              className={`${surface.card} bg-surface`}
             >
-              <h3 className="font-bold text-lg">{item.title}</h3>
-              <p className="mt-2 text-muted">{item.body}</p>
+              <p className="display font-semibold text-accent-strong">
+                {step.when}
+              </p>
+              <p className="mt-3 text-lg">{step.body}</p>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </Section>
+
+      <CtaTile
+        title="Talk to the team"
+        lede="Offices in Wellington and Christchurch, with regional managers covering the lower North Island."
+      />
     </>
   );
 }

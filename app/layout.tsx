@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { company } from "@/lib/content";
 import "./globals.css";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
+const dm = DM_Sans({ subsets: ["latin"], variable: "--font-dm" });
 
-/* Only for the italic accent word in big statements. */
-const instrument = Instrument_Serif({
+/* Headlines only. */
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-instrument",
+  variable: "--font-bricolage",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-NZ"
-      className={`${manrope.variable} ${instrument.variable} h-full antialiased`}
+      className={`${dm.variable} ${bricolage.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a
@@ -40,7 +38,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <MotionProvider>
           <SiteHeader />
-          <main id="main" className="flex-1">
+          {/* Top padding clears the floating header. */}
+          <main id="main" className="flex-1 pt-32 md:pt-28">
             {children}
           </main>
           <SiteFooter />

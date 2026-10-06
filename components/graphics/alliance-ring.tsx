@@ -40,7 +40,7 @@ export function AllianceRing() {
       viewBox={`0 0 ${W} ${H}`}
       className="mx-auto w-full max-w-2xl"
       role="img"
-      aria-label={`${trades.length} trades supported by ${company.name} with insurance, health and safety, weekly payment, payment protection, invoicing and pricing.`}
+      aria-label={`${trades.length} trades supported by ${company.name}: ${allianceSupport.map((item) => item.title.toLowerCase()).join(", ")}.`}
     >
       <title>The Alliance model</title>
 

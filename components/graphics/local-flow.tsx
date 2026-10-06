@@ -5,13 +5,13 @@ import { motion } from "motion/react";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const nodes = [
-  { label: "Client", sub: "Government, insurer, portfolio owner" },
+  { label: "Client", sub: "Insurer, adjuster or property owner" },
   {
     label: "Duncan & Taylor",
-    sub: "One contract. One point of accountability",
+    sub: "Holds the contract and runs the job",
   },
-  { label: "Local trade businesses", sub: "Paid weekly, not on settlement" },
-  { label: "The community", sub: "Wages, suppliers and rates stay in town" },
+  { label: "Local trade businesses", sub: "Paid in the weekly pay run" },
+  { label: "The community", sub: "Wages and supplier spend stay local" },
 ];
 
 const W = 960;
@@ -36,7 +36,7 @@ export function LocalFlow() {
       viewBox={`0 0 ${W} ${H}`}
       className="w-full"
       role="img"
-      aria-label="Money flows from the client to Duncan and Taylor, to local trade businesses paid weekly, and stays in the community."
+      aria-label="Money flows from the client to Duncan and Taylor, to local trade businesses paid weekly, and stays in the region."
     >
       <title>Where the money goes</title>
       <defs>

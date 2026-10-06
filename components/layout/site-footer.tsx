@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { container, surface } from "@/components/layout/section";
 import { company, nav, yearsOperating } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   return (
-    <footer data-tone="dark">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[2fr_1fr_1fr]">
+    <footer className={cn(container, "pt-4 pb-6")}>
+      <div
+        data-tone="tile"
+        className={cn(surface.block, "grid gap-10 md:grid-cols-[2fr_1fr_1fr]")}
+      >
         <div>
-          <Logo className="h-14" light />
+          <Logo className="h-14" />
           <p className="mt-5 max-w-sm text-muted">
-            Residential and light commercial reinstatement and facilities
-            maintenance. New Zealand owned and operated for {yearsOperating}{" "}
-            years.
+            Insurance reinstatement, emergency make-safe and property
+            maintenance. Building in New Zealand for {yearsOperating} years.
           </p>
         </div>
         <nav className="flex flex-col gap-2.5">
@@ -19,7 +23,7 @@ export function SiteFooter() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-muted transition-colors hover:text-foreground"
+              className="font-medium transition-colors hover:text-accent-strong"
             >
               {item.label}
             </Link>
@@ -39,12 +43,10 @@ export function SiteFooter() {
             {company.phone}
           </a>
           <p>{company.address}</p>
+          <p className="mt-6 text-sm">
+            © {new Date().getFullYear()} {company.name} Limited.
+          </p>
         </div>
-      </div>
-      <div className="border-line border-t">
-        <p className="mx-auto max-w-7xl px-6 py-5 text-muted text-sm">
-          © {new Date().getFullYear()} {company.name}. 100% New Zealand owned.
-        </p>
       </div>
     </footer>
   );

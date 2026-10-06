@@ -2,14 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import {
-  hubCount,
-  memberHubs,
-  memberTotal,
-  offices,
-  type Trade,
-  trades,
-} from "@/lib/content";
+import { places } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 /* Rough coastline as lon/lat pairs, projected with a flat scale that keeps
@@ -162,396 +155,125 @@ const toPath = (pts: [number, number][]) =>
 const islands = [northIsland, southIsland, stewartIsland].map(toPath);
 const ease = [0.22, 1, 0.36, 1] as const;
 
-type Hub = (typeof memberHubs)[number];
-type Office = (typeof offices)[number];
-
-/* One entry per town. A town can have an office, members, or both, and gets
-   a single marker so neither hides the other. */
-type Place = {
-  town: string;
-  lon: number;
-  lat: number;
-  office?: Office;
-  hub?: Hub;
-};
-
-const places: Place[] = [
-  ...memberHubs.map((hub) => ({
-    town: hub.town,
-    lon: hub.lon,
-    lat: hub.lat,
-    hub,
-    office: offices.find((o) => o.city === hub.town),
-  })),
-  ...offices
-    .filter((o) => !memberHubs.some((h) => h.town === o.city))
-    .map((office) => ({
-      town: office.city,
-      lon: office.lon,
-      lat: office.lat,
-      office,
-    })),
-];
-
-/* Marker diameter grows with the square root of the count, so area tracks
-   the number of members rather than exaggerating the big towns. Towns with an
-   office never drop below 24px, or the diamond would cover the circle. */
-const markerSize = (count: number, hasOffice: boolean) =>
-  count === 0 ? 16 : Math.max(10 + Math.sqrt(count) * 5, hasOffice ? 24 : 0);
+type Place = (typeof places)[number];
 
 /**
- * Interactive map of New Zealand. Two layers, D&T offices and Alliance
- * member hubs, each toggleable; members can be narrowed to one trade.
- * Clicking a marker opens its details in the side panel.
+ * Map of New Zealand with D&T's offices (diamonds) and the regions it works
+ * in (orange dots). Selecting a marker, or a name in the list, shows its
+ * details in the side panel.
  */
 export function NzMap() {
-  const [showOffices, setShowOffices] = useState(true);
-  const [showMembers, setShowMembers] = useState(true);
-  const [trade, setTrade] = useState<Trade | undefined>();
-  const [selected, setSelected] = useState<Place | null>(null);
-
-  const visible = places
-    .map((place) => ({
-      place,
-      count: showMembers && place.hub ? hubCount(place.hub, trade) : 0,
-      office: showOffices ? place.office : undefined,
-    }))
-    .filter(({ count, office }) => count > 0 || office);
-  const shownTotal = memberHubs.reduce((sum, h) => sum + hubCount(h, trade), 0);
-  const shownTowns = memberHubs.filter((h) => hubCount(h, trade) > 0).length;
+  const [selected, setSelected] = useState<Place>(places[0]);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-      <div>
-        <div className="flex flex-wrap gap-2">
-          <LayerToggle
-            on={showOffices}
-            onClick={() => setShowOffices((v) => !v)}
-            swatch={<span className="size-2.5 rotate-45 bg-foreground" />}
-          >
-            Offices
-          </LayerToggle>
-          <LayerToggle
-            on={showMembers}
-            onClick={() => setShowMembers((v) => !v)}
-            swatch={<span className="size-2.5 rounded-full bg-accent" />}
-          >
-            Alliance members
-          </LayerToggle>
-        </div>
-
-        {/* Width-capped, height follows the viewBox ratio so the markers,
-            positioned in percentages, land on the coastline. */}
-        <div
-          className="relative mx-auto mt-6 w-full max-w-md"
-          style={{ aspectRatio: `${W} / ${H}` }}
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+      {/* Width-capped, height follows the viewBox ratio so the markers,
+          positioned in percentages, land on the coastline. */}
+      <div
+        className="relative mx-auto w-full max-w-md"
+        style={{ aspectRatio: `${W} / ${H}` }}
+      >
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="absolute inset-0 size-full"
+          role="img"
+          aria-label="Map of New Zealand"
         >
-          <svg
-            viewBox={`0 0 ${W} ${H}`}
-            className="absolute inset-0 size-full"
-            role="img"
-            aria-label="Map of New Zealand"
-          >
-            <title>Map of New Zealand</title>
-            {islands.map((d) => (
-              <motion.path
-                key={d}
-                d={d}
-                fill="var(--line)"
-                stroke="var(--muted)"
-                strokeOpacity={0.5}
-                strokeWidth={1.5}
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, fillOpacity: 0 }}
-                whileInView={{ pathLength: 1, fillOpacity: 0.5 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease }}
-              />
-            ))}
-          </svg>
+          <title>Map of New Zealand</title>
+          {islands.map((d) => (
+            <motion.path
+              key={d}
+              d={d}
+              fill="var(--line)"
+              stroke="var(--muted)"
+              strokeOpacity={0.5}
+              strokeWidth={1.5}
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, fillOpacity: 0 }}
+              whileInView={{ pathLength: 1, fillOpacity: 0.5 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease }}
+            />
+          ))}
+        </svg>
 
-          <AnimatePresence>
-            {visible.map(({ place, count, office }, i) => {
-              const active = selected?.town === place.town;
-              const label = [
-                place.town,
-                office && "office",
-                count > 0 && `${count} ${trade ?? "members"}`,
-              ]
-                .filter(Boolean)
-                .join(", ");
-              return (
-                <Marker
-                  key={place.town}
-                  style={position(place.lon, place.lat)}
-                  delay={0.24 + i * 0.012}
-                  label={label}
-                  onClick={() => setSelected(place)}
-                >
-                  <motion.span
-                    className={cn(
-                      "flex items-center justify-center rounded-full border-2 border-background transition-colors",
-                      count > 0
-                        ? "bg-accent group-hover:ring-4 group-hover:ring-accent/25"
-                        : "bg-transparent border-transparent",
-                      active && "ring-2 ring-foreground ring-offset-2",
-                    )}
-                    animate={{
-                      width: markerSize(count, !!office),
-                      height: markerSize(count, !!office),
-                    }}
-                    transition={{ duration: 0.3, ease }}
-                  >
-                    {office && (
-                      <span className="size-2 rotate-45 bg-foreground" />
-                    )}
-                  </motion.span>
-                </Marker>
-              );
-            })}
-          </AnimatePresence>
-        </div>
+        {places.map((place, i) => {
+          const active = selected.name === place.name;
+          return (
+            <motion.button
+              key={place.name}
+              type="button"
+              aria-label={place.name}
+              aria-pressed={active}
+              onClick={() => setSelected(place)}
+              className="group absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center p-1 outline-none hover:z-10 focus-visible:z-10"
+              style={position(place.lon, place.lat)}
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.14, delay: 0.24 + i * 0.04, ease }}
+            >
+              <span
+                className={cn(
+                  "flex size-6 items-center justify-center rounded-full border-2 border-background bg-accent transition-shadow group-hover:ring-4 group-hover:ring-accent/25",
+                  active && "ring-2 ring-foreground ring-offset-2",
+                )}
+              >
+                {place.kind === "office" && (
+                  <span className="size-2 rotate-45 bg-foreground" />
+                )}
+              </span>
+              <span className="pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-background text-xs opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                {place.name}
+              </span>
+            </motion.button>
+          );
+        })}
       </div>
 
       <div>
-        <p className="font-medium text-sm">Filter members by trade</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <Chip on={!trade} onClick={() => setTrade(undefined)}>
-            All trades
-          </Chip>
-          {trades.map((t) => (
-            <Chip key={t} on={trade === t} onClick={() => setTrade(t)}>
-              {t}
-            </Chip>
+        <ul className="grid gap-1">
+          {places.map((place) => (
+            <li key={place.name}>
+              <button
+                type="button"
+                onClick={() => setSelected(place)}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left font-medium transition-colors hover:bg-card",
+                  selected.name === place.name && "bg-card",
+                )}
+              >
+                {place.kind === "office" ? (
+                  <span className="size-2.5 rotate-45 bg-foreground" />
+                ) : (
+                  <span className="size-2.5 rounded-full bg-accent" />
+                )}
+                {place.name}
+                <span className="ml-auto text-muted text-sm">
+                  {place.kind === "office" ? "Office" : "Region"}
+                </span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className="mt-8 min-h-72 rounded-2xl border border-line bg-card p-6">
+        <div className="mt-6 min-h-40 rounded-2xl bg-card p-5 md:p-6">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
-              key={selected?.town ?? "summary"}
+              key={selected.name}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
             >
-              {selected ? (
-                <>
-                  <PlaceDetail place={selected} trade={trade} />
-                  <button
-                    type="button"
-                    onClick={() => setSelected(null)}
-                    className="mt-6 text-muted text-sm underline underline-offset-4 hover:text-foreground"
-                  >
-                    Back to overview
-                  </button>
-                </>
-              ) : (
-                <Summary
-                  shownTotal={shownTotal}
-                  towns={shownTowns}
-                  trade={trade}
-                  onPick={setSelected}
-                />
-              )}
+              <h3 className="font-semibold text-2xl tracking-tight">
+                {selected.name}
+              </h3>
+              <p className="mt-2 text-muted">{selected.note}</p>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
     </div>
-  );
-}
-
-/* A button centred on a map point. The name shows on hover and focus. */
-function Marker({
-  style,
-  delay,
-  label,
-  onClick,
-  children,
-}: {
-  style: { left: string; top: string };
-  delay: number;
-  label: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <motion.button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className="group absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center p-1 outline-none hover:z-10 focus-visible:z-10"
-      style={style}
-      initial={{ opacity: 0, scale: 0 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      // Exits skip the staggered entry delay so filtering feels immediate.
-      exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.14, delay, ease }}
-    >
-      {children}
-      <span className="pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-background text-xs opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-        {label}
-      </span>
-    </motion.button>
-  );
-}
-
-function LayerToggle({
-  on,
-  onClick,
-  swatch,
-  children,
-}: {
-  on: boolean;
-  onClick: () => void;
-  swatch: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={on}
-      onClick={onClick}
-      className={cn(
-        "flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors",
-        on
-          ? "border-foreground bg-card"
-          : "border-line text-muted opacity-60 hover:opacity-100",
-      )}
-    >
-      {swatch}
-      {children}
-    </button>
-  );
-}
-
-function Chip({
-  on,
-  onClick,
-  children,
-}: {
-  on: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={on}
-      onClick={onClick}
-      className={cn(
-        "rounded-full border px-3 py-1.5 text-sm transition-colors",
-        on
-          ? "border-accent bg-accent text-background"
-          : "border-line bg-card hover:border-foreground",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Summary({
-  shownTotal,
-  towns,
-  trade,
-  onPick,
-}: {
-  shownTotal: number;
-  towns: number;
-  trade?: Trade;
-  onPick: (place: Place) => void;
-}) {
-  return (
-    <>
-      <p className="font-semibold text-4xl text-accent-strong tabular-nums tracking-tight">
-        {shownTotal}
-      </p>
-      <p className="mt-1 text-muted">
-        {trade ? trade.toLowerCase() : "Alliance member businesses"} in {towns}{" "}
-        towns
-        {trade && ` (of ${memberTotal} members)`}
-      </p>
-      <p className="mt-6 font-medium text-sm">Offices</p>
-      <ul className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1">
-        {places
-          .filter((p) => p.office)
-          .map((p) => (
-            <li key={p.town}>
-              <button
-                type="button"
-                onClick={() => onPick(p)}
-                className="text-muted hover:text-foreground"
-              >
-                {p.town}
-              </button>
-            </li>
-          ))}
-      </ul>
-      <p className="mt-6 text-muted text-sm">Select a marker for details.</p>
-    </>
-  );
-}
-
-/* Everything D&T has in one town: the office, then the member breakdown. */
-function PlaceDetail({ place, trade }: { place: Place; trade?: Trade }) {
-  const total = place.hub ? hubCount(place.hub) : 0;
-  // Largest trade first; the bar scale is relative to that.
-  const rows = trades
-    .map((t) => ({ t, n: place.hub?.members[t] ?? 0 }))
-    .filter(({ n }) => n > 0)
-    .sort((a, b) => b.n - a.n);
-  const max = rows[0]?.n ?? 1;
-  return (
-    <>
-      <h3 className="font-semibold text-2xl tracking-tight">{place.town}</h3>
-      {place.office && (
-        <div className="mt-4 flex items-start gap-3">
-          <span className="mt-1.5 size-2.5 shrink-0 rotate-45 bg-foreground" />
-          <div>
-            <p className="font-medium">
-              {place.office.role === "Head office"
-                ? "Head office"
-                : "Regional office"}
-            </p>
-            <p className="text-muted text-sm">
-              {place.office.manager}, {place.office.role}
-            </p>
-          </div>
-        </div>
-      )}
-      {rows.length > 0 && (
-        <>
-          <p className="mt-6 text-muted">
-            {total} Alliance member {total === 1 ? "business" : "businesses"}{" "}
-            based here
-          </p>
-          <ul className="mt-3 grid gap-2">
-            {rows.map(({ t, n }) => (
-              <li
-                key={t}
-                className={cn(
-                  "grid grid-cols-[7rem_1fr_1.5rem] items-center gap-3 text-sm",
-                  trade && trade !== t && "opacity-40",
-                )}
-              >
-                <span>{t}</span>
-                <span className="h-2 rounded-full bg-line">
-                  <motion.span
-                    className="block h-full rounded-full bg-accent"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(n / max) * 100}%` }}
-                    transition={{ duration: 0.5, ease }}
-                  />
-                </span>
-                <span className="text-right tabular-nums">{n}</span>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </>
   );
 }
