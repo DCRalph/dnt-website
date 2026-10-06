@@ -14,9 +14,8 @@ export function SiteFooter() {
         <div>
           <Logo className="h-14" />
           <p className="mt-5 max-w-sm text-muted">
-            Residential and light commercial reinstatement and facilities
-            maintenance. New Zealand owned and operated for {yearsOperating}{" "}
-            years.
+            Insurance reinstatement, emergency make-safe and property
+            maintenance. Building in New Zealand for {yearsOperating} years.
           </p>
         </div>
         <nav className="flex flex-col gap-2.5">
@@ -45,7 +44,7 @@ export function SiteFooter() {
           </a>
           <p>{company.address}</p>
           <p className="mt-6 text-sm">
-            © {new Date().getFullYear()} {company.name}. 100% New Zealand owned.
+            © {new Date().getFullYear()} {company.name} Limited.
           </p>
         </div>
       </div>

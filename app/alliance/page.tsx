@@ -4,19 +4,10 @@ import { LocalFlow } from "@/components/graphics/local-flow";
 import { CtaTile } from "@/components/layout/cta-tile";
 import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { allianceSupport, memberQuotes } from "@/lib/content";
+import { allianceSupport, joining } from "@/lib/content";
 import { photos } from "@/lib/photos";
 
 export const metadata: Metadata = { title: "The Alliance" };
-
-/* What the member portal will offer. Listed now so the brief is visible on the
-   page; the portal itself needs a backend and is not part of this static site. */
-const portal = [
-  "Order gear and uniform",
-  "Download help material and procedures",
-  "Keep tickets and certifications current",
-  "Request assistance or leave feedback, one to one",
-];
 
 export default function AlliancePage() {
   return (
@@ -25,12 +16,12 @@ export default function AlliancePage() {
         tag="The Alliance"
         photo={photos.alliance}
         title="Good tradespeople. Great businesses."
-        lede="The best trades are not always the best at running a business, and they should not have to be. Alliance members own their business and do the work. We carry the rest."
+        lede="The Alliance is our network of more than 80 local trade crews. Members own their businesses and choose which of our jobs to take on. We bring the insurer work and take care of the scoping, pricing and paperwork."
       />
 
       <Section
-        tag="What we carry"
-        title="Everything that gets in the way of the work"
+        tag="What members get"
+        title="The work, without the admin around it"
       >
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <dl className="grid gap-6 sm:grid-cols-2">
@@ -47,60 +38,39 @@ export default function AlliancePage() {
 
       <Section
         tile
-        tag="Paid weekly"
-        title="Invoice nobody. Wait for nobody."
-        lede="D&T pays weekly and carries the risk between the job and the settlement."
+        tag="How a job reaches you"
+        title="Matched on experience and who's free"
+        lede="When a job comes in, the regional manager offers it to the member best suited to it. You lead it from there and bring in your own subbies where you need them."
       >
         <LocalFlow />
       </Section>
 
       <Section
-        tag="Why members stay"
-        title="Very low churn, for a reason"
-        lede="Steady work, professional backing and corporate clients a small outfit could not reach alone."
+        tag="Joining"
+        title="Four steps to your first job"
+        lede="We take on carpenters, joiners, plasterers, painters, plumbers, electricians, roofers and more. Specialist trades join our wider subcontractor pool."
       >
-        <div className="grid gap-6 md:grid-cols-3">
-          {memberQuotes.map((item, i) => (
+        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {joining.map((step, i) => (
             <Reveal
-              key={item.who}
-              delay={i * 0.06}
+              key={step.title}
+              delay={i * 0.04}
               className={`${surface.card} bg-surface`}
             >
-              <span className="display font-semibold text-6xl text-accent leading-none">
-                “
-              </span>
-              <p className="display mt-2 font-medium text-2xl">{item.quote}</p>
-              <p className="mt-6 font-semibold text-accent-strong">
-                {item.who}
+              <p className="display font-semibold text-accent-strong">
+                0{i + 1}
               </p>
+              <h3 className="display mt-3 font-semibold text-2xl">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-muted">{step.body}</p>
             </Reveal>
           ))}
-        </div>
-      </Section>
-
-      <Section
-        tile
-        tag="Member portal"
-        title="Coming soon for members"
-        lede="One login for gear, help material, tickets and a direct line to us."
-      >
-        <Reveal>
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {portal.map((item) => (
-              <li
-                key={item}
-                className={`${surface.inset} flex items-center gap-3 bg-card font-medium`}
-              >
-                <span className="size-2 rounded-full bg-accent" aria-hidden />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        </ol>
       </Section>
 
       <CtaTile
-        title="Own your business. Leave the rest to us."
+        title="Run your business. Leave the paperwork to us."
         lede="Talk to us about joining the Alliance in your region."
         action="Join the Alliance"
       />

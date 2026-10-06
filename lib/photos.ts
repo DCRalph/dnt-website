@@ -14,7 +14,7 @@ import hero from "@/public/photos/hero.jpg";
 import journey from "@/public/photos/journey.jpg";
 import maintenance from "@/public/photos/maintenance.jpg";
 import reinstatement from "@/public/photos/reinstatement.jpg";
-import residential from "@/public/photos/residential.jpg";
+import emergency from "@/public/photos/residential.jpg";
 import services from "@/public/photos/services.jpg";
 
 export const photos = {
@@ -32,4 +32,4 @@ export const photos = {
 export const servicePhotos: Record<
   (typeof serviceList)[number]["slug"],
   typeof hero
-> = { reinstatement, residential, maintenance };
+> = { emergency, reinstatement, maintenance };

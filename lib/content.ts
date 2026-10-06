@@ -1,428 +1,430 @@
 /**
- * Every fact the site states, in one place. Anything marked PLACEHOLDER is a
- * guess made to shape the page and needs a real number or name before launch.
+ * Every fact the site states, in one place. Sourced from the documents in
+ * /bussiness_info. Anything marked PLACEHOLDER is not in those documents and
+ * needs a real value before launch.
+ *
+ * The source documents are mostly confidential (an information memorandum,
+ * tender appendices, client pitches). Financials, margins, client revenue
+ * splits and named clients are deliberately left out of this file.
  */
 
 export const company = {
   name: "Duncan & Taylor",
   short: "D&T",
-  /* PLACEHOLDER: "57 years" in the brief puts founding around 1969. Confirm. */
   founded: 1969,
+  founders: "Peter Taylor and Ron Duncan",
   tagline: "Built on systems. Backed by experience.",
   blurb:
-    "Residential and light commercial reinstatement and facilities maintenance, delivered by local trade businesses under one accountable name. New Zealand owned and operated.",
-  /* PLACEHOLDER contact details. */
-  email: "hello@duncantaylor.co.nz",
+    "Insurance reinstatement, emergency make-safe and property maintenance for New Zealand homes. Working out of Wellington and Christchurch since 1969.",
+  domain: "duncanandtaylor.co.nz",
+  /* PLACEHOLDER: the documents give the domain but no address on it. */
+  email: "hello@duncanandtaylor.co.nz",
+  /* PLACEHOLDER phone. Should be the number that is answered 24/7. */
   phone: "0800 000 000",
-  address: "Wellington, New Zealand",
+  address: "Miramar, Wellington",
 };
 
 export const yearsOperating = new Date().getFullYear() - company.founded;
 
 export const nav = [
   { href: "/services", label: "Services" },
+  { href: "/platform", label: "Platform" },
   { href: "/alliance", label: "The Alliance" },
-  { href: "/government", label: "Government" },
+  { href: "/clients", label: "Who we work with" },
   { href: "/about", label: "Our story" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
 export const services = [
   {
+    slug: "emergency",
+    title: "Emergency response and make-safe",
+    summary:
+      "Someone on call around the clock, and a crew at the property the same day.",
+    detail:
+      "Jobs are triaged the moment they arrive, so a collapsed ceiling over a sleeping family is handled before a cracked window. The homeowner hears from us within the hour. When a big storm hits we can move crews between regions, as we did for Hawke's Bay after Cyclone Gabrielle.",
+    points: [
+      "Same-day make-safe on every job",
+      "Homeowner contacted within an hour",
+      "Weatherproofing, hazard removal and temporary repairs",
+      "Damage scoped on the same visit",
+    ],
+  },
+  {
     slug: "reinstatement",
     title: "Insurance reinstatement",
     summary:
-      "Scoped, priced and rebuilt to the claim. Tried and tested with insurers for decades.",
+      "Any repair an insured home needs, from a patch and paint to a full rebuild.",
     detail:
-      "From make-safe through to handover, one team owns the claim. We scope accurately, hold cost against the estimate, manage every trade on site and keep the homeowner informed at each step.",
-  },
-  {
-    slug: "residential",
-    title: "Residential and light commercial",
-    summary:
-      "Repairs, renovations and remediation for homes, rentals and small commercial premises.",
-    detail:
-      "Planned works and reactive repairs across housing portfolios and small commercial sites. Programmed to minimise disruption for tenants and occupants.",
+      "Our regional managers take the claim from scope to handover. An Alliance member runs the repair on site, and we deal with the insurer, the adjuster and any variation if more damage turns up once the walls are open. Smaller jobs are usually finished within about 30 days.",
+    points: [
+      "On the panel for every major New Zealand insurer",
+      "Scopes priced against each insurer's agreed rates",
+      "Variations raised with the adjuster as soon as they're found",
+      "Progress photos and written updates throughout",
+    ],
   },
   {
     slug: "maintenance",
-    title: "Facilities maintenance",
+    title: "Property maintenance",
     summary:
-      "Planned and reactive maintenance for property portfolios, with real-time reporting.",
+      "Planned and reactive maintenance for public-sector and portfolio clients.",
     detail:
-      "Recurring inspections, compliance work and responsive repairs delivered by local trades who know the buildings. Every job logged, photographed and reported.",
+      "The way we run insurance work suits maintenance contracts too: a work order comes in, it gets triaged, the nearest qualified trade picks it up and the client can watch it close out. We already maintain homes for government agencies and property managers.",
+    points: [
+      "Work orders triaged and dispatched around the clock",
+      "Rates agreed up front and shown line by line",
+      "A safety plan and pre-start checks before work starts",
+      "Live reporting the client can check at any time",
+    ],
   },
 ] as const;
 
-/* What D&T carries so an Alliance member does not have to. */
-export const allianceSupport = [
+/* The parts of a house reinstatement covers. Contents and vehicles are not
+   part of it. */
+export const scope = [
   {
-    title: "Insurance",
-    body: "Public liability and contract works held centrally.",
+    title: "Walls and foundations",
+    body: "Framing, linings and decorating. Piles, foundations, floor framing and insulation.",
   },
   {
-    title: "Health and safety",
-    body: "One system, audited, across every site.",
+    title: "Plumbing and electrical",
+    body: "Pipework, bathrooms, tiling, underfloor heating and electrical work.",
   },
   {
-    title: "Weekly payment",
-    body: "Members are paid weekly, not on claim settlement.",
+    title: "Fixtures and fittings",
+    body: "Cabinetry, heat pumps and fireplaces.",
   },
   {
-    title: "Payment protection",
-    body: "D&T carries the financial risk on every job.",
+    title: "Windows and doors",
+    body: "Frames, glazing, curtains and blinds. Doors, garage doors and electric doors.",
   },
   {
-    title: "Invoicing",
-    body: "One invoice to the client. None for the member to chase.",
+    title: "Roofs",
+    body: "Roof cladding, roof framing and ceiling insulation.",
   },
-  { title: "Pricing", body: "Consistent rates, agreed up front." },
+  {
+    title: "Outside",
+    body: "Fences, decks, verandas and tree work.",
+  },
 ];
 
-export const trades = [
-  "Builders",
-  "Painters",
-  "Plumbers",
-  "Electricians",
-  "Roofers",
-  "Plasterers",
-  "Flooring",
-  "Glaziers",
-  "Tilers",
-  "Drainlayers",
-  "Scaffolders",
-  "Landscapers",
-] as const;
+/* How ATC sorts incoming jobs. Colours are the tier names D&T uses. */
+export const triage = [
+  {
+    tier: "Double Red",
+    colour: "#b91c1c",
+    when: "Risk to life. Structural collapse, live electrical hazards, flooding in an occupied home.",
+    response: "Immediate. Every available crew is redirected.",
+  },
+  {
+    tier: "Red",
+    colour: "#ef4444",
+    when: "Serious damage that will get worse today, or a vulnerable homeowner: elderly, disabled, or a family with young children.",
+    response: "Same day",
+  },
+  {
+    tier: "Orange",
+    colour: "#fc5a08",
+    when: "Most claims. Roof damage, broken windows, water getting in. Stable, but needs securing today.",
+    response: "Same day",
+  },
+  {
+    tier: "Yellow",
+    colour: "#eab308",
+    when: "The home is liveable and the damage is slow to spread, but it still needs a make-safe.",
+    response: "Same day",
+  },
+  {
+    tier: "Green",
+    colour: "#16a34a",
+    when: "Safe and stable. Light make-safe and routine repairs.",
+    response: "Same day",
+  },
+];
 
-export type Trade = (typeof trades)[number];
-
-/* The claim journey, as listed in the brief. */
+/* A claim from our side, start to finish. */
 export const journey = [
   {
-    title: "Scope",
-    body: "Accurate on-site assessment, photographed and documented.",
+    title: "Assigned",
+    body: "The insurer or adjuster sends us the claim. One person at D&T owns it through to handover.",
   },
   {
-    title: "Cost control",
-    body: "Priced against agreed rates. Variations flagged before they happen.",
+    title: "One visit",
+    body: "A builder makes the house safe while a scoper records the damage on video and photos, and in 3D on bigger losses.",
   },
   {
-    title: "Contractor management",
-    body: "Local Alliance trades scheduled, inducted and supervised.",
+    title: "Priced",
+    body: "The scope is priced against the insurer's rates the same day, so a reserve can be set straight away.",
   },
   {
-    title: "Customer communication",
-    body: "Homeowner and client updated at every stage.",
+    title: "Repaired",
+    body: "An Alliance member does the work. Our regional manager watches quality, safety and any variations.",
   },
-  { title: "Handover", body: "Quality checked, signed off, reported." },
+  {
+    title: "Handed over",
+    body: "Signed off. The photos, invoices and updates stay on the job for the insurer to check.",
+  },
 ];
 
-/* PLACEHOLDER offices. Longitude and latitude place them on the map. */
-export const offices = [
+/* How many separate visits a homeowner sits through, by model. */
+export const visits = {
+  ours: ["Make-safe and scope, together"],
+  typical: ["Make-safe contractor", "Loss assessor", "Reinstatement builder"],
+};
+
+/* The software D&T builds and runs, in the order a job passes through it. */
+export const platform = [
   {
-    city: "Auckland",
-    lon: 174.76,
-    lat: -36.85,
-    manager: "Name",
-    role: "Regional Manager, Northern",
+    name: "ATC",
+    role: "Intake and dispatch",
+    body: "Work orders land here, whether they come by email, portal or API. A.I. reads it against the client's rules and the property's history, then an operator confirms the urgency and assigns it. A person makes the call before anything goes out.",
   },
   {
-    city: "Hamilton",
-    lon: 175.28,
-    lat: -37.79,
-    manager: "Name",
-    role: "Regional Manager, Central North",
+    name: "Hermes",
+    role: "Remote scoping",
+    body: "A field technician walks the property on a recorded video call while someone at the hub writes and prices the scope. A plumber or electrician joins the call if needed. Afterwards Hermes reviews the recording and flags anything that looks missed.",
   },
   {
-    city: "Wellington",
+    name: "Domino",
+    role: "Pricing",
+    body: "Prices each scope line against the client's agreed pricebook and keeps the build-up behind every line. It warns on anything incomplete, and an approved quote goes straight onto the job.",
+  },
+  {
+    name: "Apollo",
+    role: "Safety planning",
+    body: "Writes the site-specific safety plan and pre-start checklist from the scope and sends them to the trade's phone. The foreman signs off the checks on site.",
+  },
+  {
+    name: "Pluto",
+    role: "Job costs",
+    body: "Reads incoming supplier invoices and matches them to the job they belong to, so we know what a job has cost as it happens, not at month end.",
+  },
+  {
+    name: "Eden",
+    role: "Job portal",
+    body: "Where insurers, adjusters and homeowners follow a job: progress, photos, documents, costs and messages to the team doing the work.",
+  },
+];
+
+/* What a member gets from D&T. */
+export const allianceSupport = [
+  {
+    title: "Steady work",
+    body: "Insurer and government jobs that a small outfit can't get on its own.",
+  },
+  {
+    title: "Run your own job",
+    body: "You lead the project and your subbies. Bring it in under the allocation and the difference is yours.",
+  },
+  {
+    title: "No lock-in",
+    body: "No minimum volume. Turn down a job or take work elsewhere whenever you like.",
+  },
+  {
+    title: "Quoting done",
+    body: "We scope, price and negotiate variations with the insurer.",
+  },
+  {
+    title: "Safety plans",
+    body: "A site-specific plan on your phone before you arrive.",
+  },
+  {
+    title: "Paid weekly",
+    body: "Once the work is signed off, it goes in the next weekly pay run.",
+  },
+];
+
+/* How a trade business joins. */
+export const joining = [
+  {
+    title: "Talk to us",
+    body: "Tell us your trade, where you work and how big your crew is.",
+  },
+  {
+    title: "Checks",
+    body: "We check your insurance, your health and safety policies and your qualifications.",
+  },
+  {
+    title: "Agreement",
+    body: "One standard Alliance agreement. Everyone signs the same one.",
+  },
+  {
+    title: "Onboarding",
+    body: "We set you up on our systems and show you the reporting insurers expect.",
+  },
+];
+
+/* Trades in the Alliance. Anything else comes from a wider pool of
+   specialist subcontractors. */
+export const trades = [
+  "Carpenters",
+  "Joiners",
+  "Plasterers",
+  "Painters",
+  "Plumbers",
+  "Gasfitters",
+  "Electricians",
+  "Roofers",
+  "Bricklayers",
+  "Demolition",
+  "Flooring",
+  "Project managers",
+] as const;
+
+/* Where D&T works. Offices are staffed bases; regions are served by local
+   Alliance members and a regional manager. Coordinates place the map
+   markers. */
+export const places = [
+  {
+    name: "Wellington",
+    kind: "office",
     lon: 174.78,
     lat: -41.29,
-    manager: "Peter Taylor",
-    role: "Head office",
+    note: "Head office in Miramar, and where the business started. Covers Wellington and the Kāpiti Coast. One of two 24/7 dispatch hubs.",
   },
   {
-    city: "Christchurch",
+    name: "Christchurch",
+    kind: "office",
     lon: 172.64,
     lat: -43.53,
-    manager: "Name",
-    role: "Regional Manager, Canterbury",
+    note: "Our South Island base, and the second 24/7 dispatch hub.",
   },
   {
-    city: "Dunedin",
-    lon: 170.5,
-    lat: -45.87,
-    manager: "Name",
-    role: "Regional Manager, Southern",
-  },
-];
-
-/* PLACEHOLDER Alliance member counts, grouped by the town each business is
-   based in. Counts only, never names: the map shows coverage, not people. */
-export const memberHubs: {
-  town: string;
-  lon: number;
-  lat: number;
-  members: Partial<Record<Trade, number>>;
-}[] = [
-  {
-    town: "Whangārei",
-    lon: 174.32,
-    lat: -35.73,
-    members: { Builders: 2, Painters: 2, Plumbers: 1, Roofers: 1 },
-  },
-  {
-    town: "Auckland",
-    lon: 174.76,
-    lat: -36.85,
-    members: {
-      Builders: 8,
-      Painters: 6,
-      Plumbers: 4,
-      Electricians: 4,
-      Roofers: 3,
-      Plasterers: 3,
-      Flooring: 2,
-      Glaziers: 2,
-      Tilers: 2,
-      Drainlayers: 1,
-      Scaffolders: 2,
-      Landscapers: 1,
-    },
-  },
-  {
-    town: "Hamilton",
-    lon: 175.28,
-    lat: -37.79,
-    members: {
-      Builders: 4,
-      Painters: 3,
-      Plumbers: 2,
-      Electricians: 2,
-      Roofers: 1,
-      Plasterers: 1,
-      Flooring: 1,
-    },
-  },
-  {
-    town: "Tauranga",
-    lon: 176.17,
-    lat: -37.69,
-    members: {
-      Builders: 3,
-      Painters: 2,
-      Plumbers: 1,
-      Electricians: 1,
-      Tilers: 1,
-    },
-  },
-  {
-    town: "Rotorua",
-    lon: 176.25,
-    lat: -38.14,
-    members: { Builders: 2, Painters: 1, Roofers: 1 },
-  },
-  {
-    town: "Gisborne",
-    lon: 178.02,
-    lat: -38.66,
-    members: { Builders: 1, Painters: 1, Plumbers: 1 },
-  },
-  {
-    town: "Napier",
-    lon: 176.91,
-    lat: -39.49,
-    members: {
-      Builders: 3,
-      Painters: 2,
-      Plumbers: 1,
-      Electricians: 1,
-      Roofers: 1,
-      Drainlayers: 1,
-    },
-  },
-  {
-    town: "New Plymouth",
-    lon: 174.07,
-    lat: -39.06,
-    members: { Builders: 2, Painters: 1, Plumbers: 1, Electricians: 1 },
-  },
-  {
-    town: "Whanganui",
-    lon: 175.05,
-    lat: -39.93,
-    members: { Builders: 1, Painters: 1, Roofers: 1 },
-  },
-  {
-    town: "Palmerston North",
-    lon: 175.61,
-    lat: -40.35,
-    members: {
-      Builders: 2,
-      Painters: 2,
-      Plumbers: 1,
-      Electricians: 1,
-      Flooring: 1,
-    },
-  },
-  {
-    town: "Masterton",
+    name: "Wairarapa",
+    kind: "region",
     lon: 175.66,
     lat: -40.95,
-    members: { Builders: 1, Painters: 1 },
+    note: "Our first move outside Wellington, in 2021.",
   },
   {
-    town: "Wellington",
-    lon: 174.78,
-    lat: -41.29,
-    members: {
-      Builders: 5,
-      Painters: 4,
-      Plumbers: 3,
-      Electricians: 2,
-      Roofers: 2,
-      Plasterers: 2,
-      Glaziers: 1,
-      Tilers: 1,
-      Scaffolders: 1,
-    },
+    name: "Manawatū",
+    kind: "region",
+    lon: 175.61,
+    lat: -40.35,
+    note: "Opened in 2024 at the request of a major insurer, with local trades brought into the Alliance.",
   },
   {
-    town: "Nelson",
-    lon: 173.28,
-    lat: -41.27,
-    members: { Builders: 2, Painters: 1, Plumbers: 1, Landscapers: 1 },
+    name: "Hawke's Bay",
+    kind: "region",
+    lon: 176.91,
+    lat: -39.49,
+    note: "Crews moved here after Cyclone Gabrielle in 2023 to help with the rebuild.",
   },
-  {
-    town: "Blenheim",
-    lon: 173.95,
-    lat: -41.51,
-    members: { Builders: 1, Painters: 1, Roofers: 1 },
-  },
-  {
-    town: "Greymouth",
-    lon: 171.21,
-    lat: -42.45,
-    members: { Builders: 1, Plumbers: 1 },
-  },
-  { town: "Kaikōura", lon: 173.68, lat: -42.4, members: { Builders: 1 } },
-  {
-    town: "Christchurch",
-    lon: 172.64,
-    lat: -43.53,
-    members: {
-      Builders: 7,
-      Painters: 5,
-      Plumbers: 3,
-      Electricians: 3,
-      Roofers: 3,
-      Plasterers: 3,
-      Flooring: 2,
-      Glaziers: 1,
-      Tilers: 2,
-      Drainlayers: 2,
-      Scaffolders: 1,
-      Landscapers: 1,
-    },
-  },
-  {
-    town: "Ashburton",
-    lon: 171.75,
-    lat: -43.9,
-    members: { Builders: 1, Painters: 1, Electricians: 1 },
-  },
-  {
-    town: "Timaru",
-    lon: 171.25,
-    lat: -44.4,
-    members: { Builders: 2, Painters: 1, Plumbers: 1 },
-  },
-  {
-    town: "Queenstown",
-    lon: 168.66,
-    lat: -45.03,
-    members: { Builders: 2, Painters: 1, Electricians: 1, Landscapers: 1 },
-  },
-  {
-    town: "Dunedin",
-    lon: 170.5,
-    lat: -45.87,
-    members: {
-      Builders: 3,
-      Painters: 2,
-      Plumbers: 2,
-      Electricians: 1,
-      Roofers: 1,
-      Plasterers: 1,
-    },
-  },
-  {
-    town: "Invercargill",
-    lon: 168.35,
-    lat: -46.41,
-    members: { Builders: 2, Painters: 1, Plumbers: 1, Roofers: 1 },
-  },
-];
+] as const;
 
-/* Members in a hub, optionally narrowed to one trade. */
-export const hubCount = (hub: (typeof memberHubs)[number], trade?: Trade) =>
-  trade
-    ? (hub.members[trade] ?? 0)
-    : Object.values(hub.members).reduce((sum, n) => sum + n, 0);
+export const offices = places.filter((p) => p.kind === "office");
 
-export const memberTotal = memberHubs.reduce(
-  (sum, hub) => sum + hubCount(hub),
-  0,
-);
-
-/* PLACEHOLDER people. Headshots go in /public/people/<slug>.jpg. */
+/* Current leadership. Headshots go in /public/people/<slug>.jpg. */
 export const management = [
-  { name: "Peter Taylor", role: "Director", slug: "peter-taylor" },
-  { name: "Name", role: "Managing Director", slug: "" },
-  { name: "Name", role: "Operations Manager", slug: "" },
-  { name: "Name", role: "Health and Safety Manager", slug: "" },
-  { name: "Name", role: "Regional Manager, North Island", slug: "" },
-  { name: "Name", role: "Regional Manager, South Island", slug: "" },
+  {
+    name: "Vince Gregan",
+    role: "General Manager",
+    slug: "vince-gregan",
+    note: "Started at D&T as a 16-year-old plumbing apprentice. Came back to run the business in 2017 and set up the Alliance.",
+  },
+  {
+    name: "Kelly Spratt",
+    role: "General Manager, South Island",
+    slug: "kelly-spratt",
+    note: "Leads the Christchurch team and our South Island network.",
+  },
+  {
+    name: "Peter Wilkes",
+    role: "Commercial Manager",
+    slug: "peter-wilkes",
+    note: "Trade payments, invoicing and reconciliation.",
+  },
+  {
+    name: "John Quinlivan",
+    role: "Data and Systems Lead",
+    slug: "john-quinlivan",
+    note: "A former start-up CTO. Leads the team that builds our software.",
+  },
+  {
+    name: "Nicki Payne",
+    role: "Health, Safety and Wellbeing Lead",
+    slug: "nicki-payne",
+    note: "Leads health and safety across our sites, with our safety officers.",
+  },
+  {
+    name: "David Clements",
+    role: "Assurance Lead",
+    slug: "david-clements",
+    note: "Quality inspections and following up anything that falls short.",
+  },
+  {
+    name: "David Gollan",
+    role: "Regional Manager, Wellington",
+    slug: "david-gollan",
+    note: "Allocates Wellington jobs and looks after the trades doing them.",
+  },
+  /* PLACEHOLDER region: the org chart pairs Alastair with the Palmerston
+     North and Napier hub but does not give his title outright. */
+  {
+    name: "Alastair Harris",
+    role: "Regional Manager, Manawatū and Hawke's Bay",
+    slug: "alastair-harris",
+    note: "Runs jobs and trades across Manawatū and Hawke's Bay.",
+  },
 ];
 
-/* PLACEHOLDER milestones. */
 export const milestones = [
   {
-    year: company.founded,
-    body: "Duncan & Taylor founded as a building and decorating firm.",
+    year: "1969",
+    body: `Founded in Wellington by ${company.founders}.`,
   },
-  { year: 1990, body: "First insurance reinstatement contracts." },
-  { year: 2011, body: "Canterbury earthquake reinstatement programme." },
   {
-    year: 2018,
-    body: "The Alliance model launched: local trade businesses under one name.",
+    year: "1970s",
+    body: "Certified master builders. First insurance reinstatement contract, and a team of eight.",
   },
-  { year: 2024, body: "Facilities maintenance added for portfolio clients." },
+  {
+    year: "1980s",
+    body: "Built the new foundations for the Wellington Cable Car.",
+  },
+  {
+    year: "1990s",
+    body: "Built the nocturnal house and chimpanzee enclosure at Wellington Zoo. Brent Taylor, Peter's son, joins as a director.",
+  },
+  { year: "2000s", body: "Insurance reinstatement becomes the main focus." },
+  {
+    year: "2017",
+    body: "Vince Gregan becomes General Manager and sets up the Alliance.",
+  },
+  { year: "2021", body: "Expands into the Wairarapa." },
+  { year: "2022", body: "Named on the Deloitte Fast 50." },
+  {
+    year: "2023",
+    body: "Crews relocate to Hawke's Bay to help rebuild after Cyclone Gabrielle.",
+  },
+  { year: "2024", body: "Opens in Manawatū. Passes 10,000 jobs." },
+  { year: "2026", body: "Partnership with Flooring Design signed." },
 ];
 
-/* PLACEHOLDER figures. The brief asks for a running tracker; until there is a
-   data source these are hand-edited here, except
-   the member count, which is summed from the map data above. */
+/* Flooring Design partnership: D&T works out of FD stores nationwide. */
+export const partnership = {
+  name: "Flooring Design",
+  domain: "flooringdesign.co.nz",
+  rollout: [
+    {
+      when: "June 2026",
+      body: "Partnership signed. Teams and stores start moving onto our systems.",
+    },
+    {
+      when: "End of 2026",
+      body: "A D&T base in every Flooring Design store from the Bombay Hills to Wellington.",
+    },
+    {
+      when: "2027",
+      body: "The same across the South Island.",
+    },
+  ],
+};
+
+/* Headline figures. Hand-edited until there is a live data source. */
 export const stats = [
   { value: yearsOperating, label: "Years in business", suffix: "" },
-  { value: 12400, label: "Jobs completed", suffix: "+" },
-  { value: memberTotal, label: "Alliance trade businesses", suffix: "" },
-  { value: 100, label: "New Zealand owned", suffix: "%" },
-];
-
-/* PLACEHOLDER quotes, to be replaced with interviews with local members. */
-export const memberQuotes = [
-  {
-    quote:
-      "I do the work I'm good at and the paperwork just isn't there any more.",
-    who: "Painter, Canterbury",
-  },
-  {
-    quote: "Paid every week. That changes how you run a small business.",
-    who: "Builder, Waikato",
-  },
-  {
-    quote:
-      "We get government work as a two-person outfit. That doesn't happen on your own.",
-    who: "Plumber, Wellington",
-  },
+  { value: 10000, label: "Jobs completed", suffix: "+" },
+  { value: 80, label: "Alliance work crews", suffix: "+" },
+  { value: 600, label: "Jobs a day our dispatch can handle", suffix: "" },
 ];
