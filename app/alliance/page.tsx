@@ -13,16 +13,12 @@ export default function AlliancePage() {
   return (
     <>
       <PageIntro
-        tag="The Alliance"
         photo={photos.alliance}
         title="Good tradespeople. Great businesses."
         lede="The Alliance is our network of more than 80 local trade crews. Members own their businesses and choose which of our jobs to take on. We bring the insurer work and take care of the scoping, pricing and paperwork."
       />
 
-      <Section
-        tag="What members get"
-        title="The work, without the admin around it"
-      >
+      <Section title="The work, without the admin around it">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <dl className="grid gap-6 sm:grid-cols-2">
             {allianceSupport.map((item, i) => (
@@ -38,7 +34,6 @@ export default function AlliancePage() {
 
       <Section
         tile
-        tag="How a job reaches you"
         title="Matched on experience and who's free"
         lede="When a job comes in, the regional manager offers it to the member best suited to it. You lead it from there and bring in your own subbies where you need them."
       >
@@ -46,7 +41,6 @@ export default function AlliancePage() {
       </Section>
 
       <Section
-        tag="Joining"
         title="Four steps to your first job"
         lede="We take on carpenters, joiners, plasterers, painters, plumbers, electricians, roofers and more. Specialist trades join our wider subcontractor pool."
       >

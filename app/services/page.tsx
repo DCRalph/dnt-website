@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { JourneyRow } from "@/components/graphics/journey-row";
+import { JobSheet } from "@/components/graphics/job-sheet";
 import { CtaTile } from "@/components/layout/cta-tile";
 import { PageIntro, Section, surface } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
@@ -14,7 +14,6 @@ export default function ServicesPage() {
   return (
     <>
       <PageIntro
-        tag="Services"
         photo={photos.services}
         title="From the first call to the last coat of paint"
         lede="We make homes safe after damage, repair them for the insurer and maintain them for the people who own them. Jobs range from a patch and paint to full rebuilds."
@@ -24,7 +23,6 @@ export default function ServicesPage() {
           key={service.slug}
           id={service.slug}
           tile
-          tag={`0${i + 1}`}
           title={service.title}
           lede={service.summary}
         >
@@ -57,7 +55,6 @@ export default function ServicesPage() {
       ))}
 
       <Section
-        tag="Triage"
         title="The worst damage gets seen first"
         lede="Jobs are sorted into one of five tiers as they arrive. Whatever the tier, the homeowner hears from us within an hour and a crew is there the same day."
       >
@@ -88,7 +85,6 @@ export default function ServicesPage() {
 
       <Section
         tile
-        tag="Scope"
         title="Everything that's part of the house"
         lede="Reinstatement covers the building itself. Contents and vehicles are handled separately by the insurer."
       >
@@ -107,11 +103,10 @@ export default function ServicesPage() {
       </Section>
 
       <Section
-        tag="How a claim runs"
-        title="One visit, priced the same day"
-        lede="Most claims involve three or more visits from different people. Ours start with one."
+        title="One visit. One job sheet."
+        lede="Most claims involve three or more visits from different people. Ours start with one, and the sheet is open to the insurer the whole way."
       >
-        <JourneyRow />
+        <JobSheet />
       </Section>
 
       <CtaTile
