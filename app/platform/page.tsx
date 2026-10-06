@@ -31,14 +31,12 @@ export default function PlatformPage() {
   return (
     <>
       <PageIntro
-        tag="Platform"
         photo={photos.journey}
         title="We write our own software"
         lede="Our jobs run through tools that our in-house development team builds and supports. They were made for the way we work, and the insurer sees the same job record we do."
       />
 
       <Section
-        tag="Six tools"
         title="In the order a job meets them"
         lede="From the moment a work order arrives to the day the client checks the final invoice."
       >
@@ -61,11 +59,7 @@ export default function PlatformPage() {
         </ol>
       </Section>
 
-      <Section
-        tile
-        tag="Hermes"
-        title="Twice the scopes, no write-up afterwards"
-      >
+      <Section tile title="Twice the scopes, no write-up afterwards">
         <div className="grid gap-4 md:grid-cols-3">
           <Reveal className={cn(surface.card, "bg-card")}>
             <p className="display font-semibold text-6xl text-accent-strong">
@@ -93,7 +87,6 @@ export default function PlatformPage() {
       </Section>
 
       <Section
-        tag="Open to audit"
         title="Nothing a client can't check"
         lede="Insurers and adjusters log in to the same jobs we work on. Nobody has to drive out to the property to see how it's going."
       >

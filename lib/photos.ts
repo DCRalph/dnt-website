@@ -10,7 +10,6 @@ import alliance from "@/public/photos/alliance.jpg";
 import community from "@/public/photos/community.jpg";
 import contact from "@/public/photos/contact.jpg";
 import government from "@/public/photos/government.jpg";
-import hero from "@/public/photos/hero.jpg";
 import journey from "@/public/photos/journey.jpg";
 import maintenance from "@/public/photos/maintenance.jpg";
 import reinstatement from "@/public/photos/reinstatement.jpg";
@@ -18,7 +17,6 @@ import emergency from "@/public/photos/residential.jpg";
 import services from "@/public/photos/services.jpg";
 
 export const photos = {
-  hero,
   journey,
   community,
   about,
@@ -31,5 +29,5 @@ export const photos = {
 /* One photo per service, keyed by slug. */
 export const servicePhotos: Record<
   (typeof serviceList)[number]["slug"],
-  typeof hero
+  typeof journey
 > = { emergency, reinstatement, maintenance };

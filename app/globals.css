@@ -52,6 +52,8 @@
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-dm), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bricolage), var(--font-dm), sans-serif;
+  /* Job sheets, site tags and captions. */
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
 }
 
 @layer base {
@@ -70,4 +72,23 @@
   font-family: var(--font-display);
   letter-spacing: -0.02em;
   line-height: 1;
+}
+
+/* Highlighter stroke behind a run of words. Painted per line, so it wraps
+   with the text. */
+@utility highlight {
+  background: linear-gradient(
+    transparent 55%,
+    color-mix(in srgb, var(--accent) 32%, transparent) 55% 92%,
+    transparent 92%
+  );
+}
+
+/* Where a photo goes until D&T supply one. */
+@utility hatched {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--line) 0 5px,
+    var(--surface) 5px 11px
+  );
 }

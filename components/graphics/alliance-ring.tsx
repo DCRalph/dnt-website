@@ -24,12 +24,12 @@ const polar = (r: number, deg: number) => {
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/* Two words stay on one line; longer labels break before the last word. */
+/* Two words stay on one line; longer labels break in the middle. */
 const splitLabel = (label: string) => {
   const words = label.split(" ");
-  return words.length < 3
-    ? [label]
-    : [words.slice(0, -1).join(" "), words[words.length - 1]];
+  if (words.length < 3) return [label];
+  const mid = Math.ceil(words.length / 2);
+  return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
 };
 
 /* Independent trade businesses on the outer ring, the D&T layer they sit

@@ -91,7 +91,6 @@ export default function ClientsPage() {
   return (
     <>
       <PageIntro
-        tag="Who we work with"
         photo={photos.government}
         title="On the panel for every major insurer in New Zealand"
         lede="Most of our work comes from insurers and the adjusters and brokers who manage claims for them. We also maintain homes for government agencies and property managers."
@@ -100,7 +99,7 @@ export default function ClientsPage() {
         <StatsRow />
       </div>
 
-      <Section tag="Our clients" title="Who sends us work">
+      <Section title="Who sends us work">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {clients.map((item, i) => (
             <Reveal
@@ -117,7 +116,6 @@ export default function ClientsPage() {
 
       <Section
         tile
-        tag="For insurers"
         title="Why insurers use us"
         lede="Fewer visits, faster reserves and costs you can check line by line."
       >
@@ -133,7 +131,6 @@ export default function ClientsPage() {
 
       <Section
         id="homeowners"
-        tag="Homeowners"
         title="If your insurer has sent us"
         lede="What to expect once your claim reaches us."
       >
